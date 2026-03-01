@@ -1,5 +1,6 @@
 package securityapp;
 
+import securityapp.model.ResourceRegistry;
 import securityapp.capability.Capability;
 import securityapp.capability.Read;
 import securityapp.model.AccessScope;
@@ -17,15 +18,16 @@ public class Main {
 
         User internUser = new User("emp-101", Role.INTERN);
         User adminUser = new User("emp-999", Role.SYS_ADMIN);
+        User developerUser = new User("emp-202", Role.DEVELOPER);
+        User managerUser = new User("emp-303", Role.MANAGER);
 
-        Resource publicSite = new Resource("Company Website", AccessScope.PUBLIC);
-        Resource payrollDB = new Resource("Payroll Database", AccessScope.CONFIDENTIAL);
 
+        
         System.out.println("=== RUNNING ACCESS TESTS ===");
 
         try {
             System.out.println("Test 1.....");
-            Capability<Read> readToken = proxy.requestRead(internUser, publicSite);
+            Capability<Read> readToken = proxy.requestRead(internUser, ResourceRegistry.COMPANY_WEBSITE);
             System.out.println("TEST 1 SUCCESS: User granted access to " + readToken.getResource().getName());
         } catch (SecurityException e) {
             System.out.println("TEST 1 FAILED: " + e.getMessage());
@@ -33,7 +35,7 @@ public class Main {
 
         try {
             System.out.println("Attempting Test 2...");
-            Capability<Read> readToken = proxy.requestRead(internUser, payrollDB);
+            Capability<Read> readToken = proxy.requestRead(internUser, ResourceRegistry.PAYROLL_DB);
             System.out.println("TEST 2 SUCCESS: User granted access to " + readToken.getResource().getName());
         } catch (SecurityException e) {
             System.out.println("TEST 2 EXPECTED REJECTION: " + e.getMessage());

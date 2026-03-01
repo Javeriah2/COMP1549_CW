@@ -1,18 +1,19 @@
 package securityapp.policy;
 
-import java.security.PublicKey;
+
 import securityapp.model.User;
 import securityapp.model.Resource;
-import securityapp.model.AccessScope;
 import securityapp.capability.Capability;
 import securityapp.capability.Read;
 import securityapp.capability.Write;
 
 public class SecurityProxy {
 
+	private final AccessPolicy policy = new ManagementAccessPolicy();
+	
     public Capability<Read> requestRead(User user, Resource resource) {
 
-        if (evaluateReadPolicy(user, resource)) {
+        if (policy.canRead(user, resource)) {
             logAttempt(user, resource, "READ", "ALLOW");
             return new Capability<Read>(resource);
         } else {
@@ -23,7 +24,7 @@ public class SecurityProxy {
     }
 
     public Capability<Write> requestWrite(User user, Resource resource) {
-        if (evaluateWritePolicy(user, resource)) {
+        if (policy.canWrite(user, resource)) {
             logAttempt(user, resource, "WRITE", "ALLOW");
             return new Capability<Write>(resource);
         } else {
@@ -31,18 +32,6 @@ public class SecurityProxy {
             throw new SecurityException(
                     "Access Denied " + user.getRole() + " cannot write to " + resource.getScope() + " resources");
         }
-    }
-
-    private boolean evaluateReadPolicy(User user, Resource resource) {
-        if (resource.getScope() == AccessScope.PUBLIC) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private boolean evaluateWritePolicy(User user, Resource resource) {
-        return false;
     }
 
     private void logAttempt(User user, Resource resource, String action, String result) {
