@@ -3,6 +3,7 @@ package securityapp;
 import securityapp.model.ResourceRegistry;
 import securityapp.capability.Capability;
 import securityapp.capability.Read;
+import securityapp.capability.Write;
 import securityapp.model.AccessScope;
 import securityapp.model.Resource;
 import securityapp.model.Role;
@@ -40,6 +41,22 @@ public class Main {
         } catch (SecurityException e) {
             System.out.println("TEST 2 EXPECTED REJECTION: " + e.getMessage());
         }
+        try {
+        	System.out.println("Test 3");
+        	Capability<Write> writeToken = proxy.requestWrite(managerUser, ResourceRegistry.HR_RECORDS);
+        	System.out.println("TEST 3 SUCCESS: User granted access to" + writeToken.getResource().getName());
+        }  catch (SecurityException e) {
+            System.out.println("TEST 3 EXPECTED REJECTION: " + e.getMessage());
+        }
+        try {
+        	System.out.println("Test 4");
+        	Capability<Write> writeToken = proxy.requestWrite(internUser, ResourceRegistry.HR_RECORDS);
+        	System.out.println("TEST 4 SUCCESS: User granted access to" + writeToken.getResource().getName());
+        }  catch (SecurityException e) {
+            System.out.println("TEST 4 EXPECTED REJECTION: " + e.getMessage());
+        }
+
 
     }
+    
 }
