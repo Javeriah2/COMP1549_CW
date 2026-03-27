@@ -1,7 +1,10 @@
 {
-    "java.project.sourcePaths": ["src"],
+    "java.project.sourcePaths": [
+        "src"
+    ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "lib/**/*.jar",
+        "C:\\Users\\Donald John Oommen\\Desktop\\COMP-1549 CW\\SecurityAppCW\\lib\\junit-platform-console-standalone-1.13.0-M3.jar"
     ]
 }
