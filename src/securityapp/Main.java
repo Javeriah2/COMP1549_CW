@@ -73,7 +73,7 @@ public class Main {
         // Guest writes to internal resource (should REFUSE)
         runWriteTest(proxy, guest, printer);
 
-        // Student executes on printer (should ALLOW)
+        // Student executes on printer (should REFUSE)
         runExecuteTest(proxy, student, printer);
 
         // Guest executes on confidential resource (should REFUSE)
