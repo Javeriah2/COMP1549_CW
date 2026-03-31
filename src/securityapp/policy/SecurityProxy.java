@@ -64,9 +64,9 @@ public class SecurityProxy implements ResourceAccessor {
         AccessScope scope = resource.getScope();
 
         return switch (scope) {
-            case PUBLIC -> role == Role.STAFF || role == Role.ADMIN;
+            case PUBLIC -> role == Role.ADMIN;
             case INTERNAL -> role == Role.STAFF || role == Role.ADMIN;
-            case CONFIDENTIAL -> role == Role.STAFF || role == Role.ADMIN;
+            case CONFIDENTIAL -> role == Role.ADMIN;
             default -> false;
         };
     }
