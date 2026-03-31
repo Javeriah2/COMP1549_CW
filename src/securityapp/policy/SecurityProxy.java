@@ -65,7 +65,7 @@ public class SecurityProxy implements ResourceAccessor {
 
         return switch (scope) {
             case PUBLIC -> role == Role.STAFF || role == Role.ADMIN;
-            case INTERNAL -> role == Role.STUDENT || role == Role.STAFF || role == Role.ADMIN;
+            case INTERNAL -> role == Role.STAFF || role == Role.ADMIN;
             case CONFIDENTIAL -> role == Role.STAFF || role == Role.ADMIN;
             default -> false;
         };
